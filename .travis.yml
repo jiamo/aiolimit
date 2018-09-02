@@ -5,6 +5,7 @@ before_install:
 - sudo apt-get install libyaml-dev redis-server
 deploy:
   provider: pypi
+  distributions: sdist bdist_wheel
   user: jiamo
   password:
     secure: !!binary |
@@ -21,7 +22,9 @@ deploy:
       SDRaQzZMNmNNd0VtT2pqR2JldmRkakRhcmtuRjJnSGVJSDU5MGJHelJLdy9sQnB2Ky9sRjIyZ0U0
       eCsveG1GelJMMEpBdmlIV1dvV1BoZ05ITTI1TGdRMTlNNFRDbWF5UHlST2lwUWlRYzFERGlNdmM9
   true:
+    python: 3.6
     tags: true
+    repo: jiamo/aiolimit
 install:
 - python setup.py install
 - pip install codecov
