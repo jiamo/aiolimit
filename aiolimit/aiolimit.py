@@ -45,7 +45,7 @@ class TokenBucketManager(object):
                 tk = await self.create_bucket(
                     redis, key, rate, burst, only_check_failed)
             else:
-                tk = int(tk)
+                tk = int(float(tk))
             if tk < 1:
                 tk = await self.check_and_refill(
                     redis, key, rate, burst, only_check_failed)
@@ -69,6 +69,9 @@ class TokenBucketManager(object):
             tk = min(rate, burst) - 1
         else:
             tk = min(rate, burst)
+            
+        if tk < 0:
+            tk = 0
 
         pipe = redis.pipeline()
         fut1 = pipe.hset(key, "tk", tk)
@@ -98,6 +101,8 @@ class TokenBucketManager(object):
                 rate = self._default_rate
 
             tk = min(rate * n, bst) - 1
+            #if tk < 0:
+            #    tk = 0
             if not only_check_failed:
                 pipe = redis.pipeline()
                 fut1 = pipe.hset(key, "tk", tk)

@@ -66,7 +66,10 @@ async def test_fu_success():
 
 
 @pytest.mark.asyncio
-async def test_g():
+async def test_g(redis_pool):
+    with await redis_pool as redis:
+        await redis.delete("test_global")
+
     with pytest.raises(RateLimit) as rateinfo:
 
         while True:
