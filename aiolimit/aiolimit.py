@@ -160,8 +160,9 @@ class rate_limit:
                 print("in rate_limit check failed ", fail)
                 access = await self.limit.get_token(
                     key, self.rate, self.burst)  # make it normal
-                if access is False:
-                    raise RateLimit()
+                # no need raies after call
+                # if access is False:
+                #    raise RateLimit()
 
         return result
 
@@ -177,7 +178,3 @@ class rate_limit:
         ordered_kwargs = sorted(kwargs.items())
         return (func.__module__ or '') + func.__name__ + str(
             args[1:] if self.noself else args) + str(ordered_kwargs)
-
-
-
-

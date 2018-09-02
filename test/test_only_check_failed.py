@@ -59,7 +59,21 @@ async def test_fu_check_failed_random():
                 failed2 += 1
             await asyncio.sleep(0.1)
             total2 += 1
+    print("after running total2")
+    
+    # restart
+    await  asyncio.sleep(1)
+    with pytest.raises(RateLimit) as rateinfo:
+        total3 = 0
+        failed3 = 0
+        while True:
+            ret = await fu1(7)
+            if check_failed(ret):
+                failed3 += 1
+            await asyncio.sleep(0.1)
+            total3 += 1
 
     print("total1 {} total2 {} ".format(total1, total2))
     print("failed2 {}".format(failed2))
     assert total2 >= total1
+    assert total3 >= total1
