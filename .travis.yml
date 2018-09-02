@@ -1,0 +1,21 @@
+language: python
+sudo: required
+python:
+  - 3.5
+  - 3.6
+before_install:
+  - sudo apt-get install libyaml-dev redis-server
+install:
+  - python setup.py install
+  - pip install codecov
+script:
+  - python setup.py test
+after_success:
+  - codecov
+deploy:
+  provider: pypi
+  user: jiamo
+  password:
+    secure:
+  on:
+    tags: true
