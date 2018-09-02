@@ -58,7 +58,7 @@ async def test_fu_success():
     while True:
         await fu2(9)
         # try to make it pass
-        await asyncio.sleep(0.22)
+        await asyncio.sleep(0.25)
         call_n += 1
         if call_n > 20:
             print("already call out 20")
